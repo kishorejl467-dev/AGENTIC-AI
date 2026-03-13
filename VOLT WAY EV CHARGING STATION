@@ -1,0 +1,33 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# This is your Database to track Slot Status
+# 0 = Empty, 1 = Occupied (Offline/Online)
+slots_data = {
+    "slot_1": {"status": "Available", "is_occupied": 0},
+    "slot_2": {"status": "Available", "is_occupied": 0}
+}
+
+@app.route('/update_sensor', methods=['POST'])
+def update_sensor():
+    data = request.json
+    id = data.get("slot_id")
+    current_value = data.get("current") # Value from sensor
+
+    # Logic: If current is detected, it is Busy
+    if current_value > 0:
+        slots_data[id]["is_occupied"] = 1
+        slots_data[id]["status"] = "Occupied (Offline Charging)"
+    else:
+        slots_data[id]["is_occupied"] = 0
+        slots_data[id]["status"] = "Available"
+        
+    return jsonify({"message": "Volt Way Slot Updated!"}), 200
+
+@app.route('/view_slots', methods=['GET'])
+def view_slots():
+    return jsonify(slots_data)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
