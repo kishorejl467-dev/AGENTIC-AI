@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Volt Way EV Charging</title>
+
+<style>
+body{
+font-family: Arial;
+background:#0f172a;
+color:white;
+margin:0;
+text-align:center;
+}
+
+header{
+background:#16a34a;
+padding:20px;
+}
+
+.container{
+padding:30px;
+}
+
+button{
+padding:12px 20px;
+margin:10px;
+border:none;
+background:#22c55e;
+color:white;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#15803d;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+margin:20px auto;
+width:300px;
+border-radius:10px;
+}
+
+.status{
+font-weight:bold;
+}
+
+.available{
+color:lightgreen;
+}
+
+.busy{
+color:red;
+}
+
+footer{
+margin-top:40px;
+padding:20px;
+background:#020617;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>⚡ Volt Way EV Charging</h1>
+<p>Smart EV Charging Station Finder</p>
+</header>
+
+<div class="container">
+
+<h2>Find Charging Stations</h2>
+
+<div class="card">
+<h3>Station 1</h3>
+<p>Location: Chennai</p>
+<p class="status available">Status: Available</p>
+<button onclick="bookSlot()">Book Slot</button>
+</div>
+
+<div class="card">
+<h3>Station 2</h3>
+<p>Location: Chengalpattu</p>
+<p class="status busy">Status: Busy</p>
+<button onclick="busy()">Book Slot</button>
+</div>
+
+<div class="card">
+<h3>Station 3</h3>
+<p>Location: Tambaram</p>
+<p class="status available">Status: Available</p>
+<button onclick="bookSlot()">Book Slot</button>
+</div>
+
+</div>
+
+<footer>
+<p>Volt Way EV Charging System Project</p>
+</footer>
+
+<script>
+
+function bookSlot(){
+alert("Charging Slot Booked Successfully!");
+}
+
+function busy(){
+alert("Charger Busy. Please Try Another Station.");
+}
+
+</script>
+
+</body>
+</html>
