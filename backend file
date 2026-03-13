@@ -1,0 +1,89 @@
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' import 'dart:convert';
+import 'dart:async';
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: VoltWayFrontEnd(),
+  ));
+}
+
+class VoltWayFrontEnd extends StatefulWidget {
+  @override
+  _VoltWayFrontEndState createState() => _VoltWayFrontEndState();
+
+
+class _VoltWayFrontEndState extends State<VoltWayFrontEnd> 
+  String slotStatus = "Loading...";
+  Color statusColor = Colors.grey;
+
+்
+  Future<void> checkOfflineStatus() async {
+    try {்
+      final response = await http.get(Uri.parse('http://192.168.1.5:5000/get_status'));
+
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        setState(() {
+          if (data['slot_1'] == 1) {
+            slotStatus = "OFFLINE CHARGING (BUSY)";
+            statusColor = Colors.red;
+          } else {
+            slotStatus = "AVAILABLE";
+            statusColor = Colors.green;
+          }
+        });
+      }
+    } catch (e) {
+      setState(() {
+        slotStatus = "Server Not Connected";
+        statusColor = Colors.orange;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+   (Live Update)
+    Timer.periodic(Duration(seconds: 3), (Timer t) => checkOfflineStatus());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("VOLT WAY - EV Station"),
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Charging Slot 1", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            SizedBox(height: 30),
+            
+          ்
+            Container(
+              padding: EdgeInsets.all(50),
+              decoration: BoxDecoration(
+                color: statusColor.withOpacity(0.2),
+                shape: BoxShape.circle,
+                border: Border.all(color: statusColor, width: 4),
+              ),
+              child: Icon(Icons.ev_station, size: 100, color: statusColor),
+            ),
+            
+            SizedBox(height: 30),
+          ்
+            Text(
+              slotStatus,
+              style: TextStyle(fontSize: 22, color: statusColor, fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
