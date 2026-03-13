@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Volt Way EV Charging</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+<h1>Volt Way ⚡</h1>
+<p>Smart EV Charging Solution</p>
+</header>
+
+<div class="container">
+
+<h2>Login</h2>
+
+<input type="text" placeholder="Enter Email">
+<input type="password" placeholder="Enter Password">
+
+<button onclick="login()">Login</button>
+
+<hr>
+
+<h2>Quick Actions</h2>
+
+<button onclick="findStation()">Find Charger</button>
+<button onclick="bookSlot()">Book Slot</button>
+<button onclick="scanQR()">Scan QR</button>
+
+<hr>
+
+<h2>Battery Status</h2>
+
+<p>Battery Percentage : <b>65%</b></p>
+<p>Estimated Range : <b>120 km</b></p>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
