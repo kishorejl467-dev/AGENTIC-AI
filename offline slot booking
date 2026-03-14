@@ -1,0 +1,27 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SendSMS from 'react-native-sms'; // SMS anuppa indha library venum
+
+const handleOfflineBooking = async (bookingDetails) => {
+  try {
+    // 1. Local-ah data-va save pannu
+    const existingBookings = await AsyncStorage.getItem('offline_bookings');
+    const bookings = existingBookings ? JSON.parse(existingBookings) : [];
+    bookings.push({ ...bookingDetails, status: 'pending_sync' });
+    await AsyncStorage.setItem('offline_bookings', JSON.stringify(bookings));
+
+    // 2. Server-ku SMS vazhiya notification anuppu
+    const message = `Booking: ${bookingDetails.stationName}, Date: ${bookingDetails.date}, Time: ${bookingDetails.time}`;
+    
+    SendSMS.send({
+      body: message,
+      recipients: ['+919876543210'], // Server backend SMS number
+      successTypes: ['sent', 'queued'],
+    }, (completed, cancelled, error) => {
+      console.log('SMS status:', completed);
+    });
+
+    alert("Internet illai! Ungal booking SMS vazhiya anuppappattadhu.");
+  } catch (error) {
+    console.error("Offline storage error:", error);
+  }
+};
